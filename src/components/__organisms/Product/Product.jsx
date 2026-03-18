@@ -1,20 +1,23 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer, useState } from "react";
 import Button from "../../__atoms/Button/Button";
 import Infos from "../../__atoms/Infos/Infos";
 import Images from "../../__atoms/Images/Images";
+import Bar from "../../__molecules/Bar/Bar";
+
+function reducer(state, action) {
+  if (action.type === "increment") {
+    return {
+      quantity: state.quantity + 1,
+    };
+  } else if (action.type === "increment") {
+    return {
+      quantity: state.quantity - 1,
+    };
+  }
+}
 
 function Product() {
-  function Plus() {
-    setCount(count + 1);
-  }
-  function Minus() {
-    if (count === 0) return;
-    setCount(count - 1);
-  }
-  const [count, setCount] = useState(() => {
-    return Number(localStorage.getItem("count") || 0);
-  });
-  localStorage.setItem("count", count || 0);
+  const [state, dispatch] = useReducer(reducer, { quantity: 0 });
 
   return (
     <>
@@ -33,7 +36,16 @@ function Product() {
               "These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they’ll withstand everything the weather can offer."
             }
           />
-          <Button Count={count} Plus={Plus} Minus={Minus} />
+          <Button
+            Count={state.quantity}
+            Plus={() => {
+              dispatch({ type: "increment" });
+            }}
+            Minus={() => {
+              dispatch({ type: "decrement" });
+            }}
+            Click={() => {}}
+          />
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 
 function Infos({ Company, Name, Description, Price, Discount, OldPrice }) {
   return (
