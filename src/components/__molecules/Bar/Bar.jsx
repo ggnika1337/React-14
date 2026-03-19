@@ -6,7 +6,7 @@ import Burger from "../Burger/Burger";
 import Trash from "../../../assets/Images/Trash.svg";
 import Img from "../../../assets/Images/Shoe/ShoeOne.png";
 
-function Bar({ Count, isShown, TrashClick }) {
+function Bar({ Count, isShown, TrashClick, showOrange }) {
   const [showCart, setShowCart] = useState(false);
   const [door, setDoor] = useState(false);
 
@@ -35,7 +35,7 @@ function Bar({ Count, isShown, TrashClick }) {
         <div className="flex gap-[56px] h-full items-center flex-row">
           <div className="flex gap-[16px]">
             <div
-              className="gap-[3px] flex flex-col relative pt-[5px] hidden max-md:flex"
+              className="gap-[3px] flex flex-col relative pt-[5px] hidden max-md:flex z-21"
               onClick={() => {
                 if (door === false) {
                   setDoor(true);
@@ -67,7 +67,7 @@ function Bar({ Count, isShown, TrashClick }) {
             </div>
             <img src={Sneakers} className="w-[137px] h-[20px]" />
           </div>
-          <div className="text-[15px] font-[400] text-[#69707D] h-full items-center flex gap-[30px] max-md:hidden z-2">
+          <div className="text-[15px] font-[400] text-[#69707D] h-full items-center flex gap-[30px] max-md:hidden">
             <div className="hover:text-black border-[#FF7E1B] hover:border-b-[4px] h-full pt-[45px] cursor-pointer transition-none">
               <h1>Collections</h1>
             </div>
@@ -87,7 +87,12 @@ function Bar({ Count, isShown, TrashClick }) {
         </div>
         <div className="flex gap-[40px]">
           <div className="flex items-center relative">
-            <div className="absolute right-[-7px] top-[10px] w-[19px] h-[13px] bg-[#FF7E1B] rounded-[7px] flex items-center justify-center z-10">
+            <div
+              style={{
+                display: showOrange ? "flex" : "none",
+              }}
+              className="absolute right-[-7px] top-[10px] w-[19px] h-[13px] bg-[#FF7E1B] rounded-[7px] flex items-center justify-center z-10"
+            >
               <h1 className="text-white text-[10px]">{Count}</h1>
             </div>
             <img
@@ -131,9 +136,7 @@ function Bar({ Count, isShown, TrashClick }) {
             </span>
             <div className="flex gap-[5px]">
               <span>$125.00 x {Count}</span>
-              <span className="font-[700]">
-                {"$" + 125 * localStorage.getItem("count") + ".00"}
-              </span>
+              <span className="font-[700]">{"$" + 125 * Count + ".00"}</span>
             </div>
           </div>
           <img

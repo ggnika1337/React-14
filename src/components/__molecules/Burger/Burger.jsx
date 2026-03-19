@@ -4,7 +4,7 @@ function Burger({ isOpen, Ref, SelectClick }) {
   return (
     <>
       <div
-        className="flex flex-col gap-[20px] pt-[120px] px-[50px] absolute bg-white w-[70vw] h-full"
+        className="flex flex-col gap-[20px] pt-[120px] px-[50px] absolute bg-white w-[70vw] h-full z-21"
         style={{ left: isOpen ? "0px" : "-100%" }}
         ref={Ref}
       >

@@ -1,4 +1,4 @@
-import { useContext, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import "./App.css";
 import Bar from "./components/__molecules/Bar/Bar";
 import Product from "./components/__organisms/Product/Product";
@@ -21,11 +21,14 @@ function reducer(state, action) {
 function App() {
   const [added, setAdded] = useState();
   const [state, dispatch] = useReducer(reducer, { quantity: 0 });
-  const [count, setCount] = useState();
-  const [isShown, setIsShown] = useState(() => {
-    if (state.quantity === 0) {
+  const [count, setCount] = useState(() => {
+    return Number(localStorage.getItem("count")) || 0;
+  });
+  const [isShown, setIsShown] = useState(true);
+  const [showOrange, setShowOrange] = useState(() => {
+    if (localStorage.getItem("count") === "0") {
       return false;
-    } else {
+    } else if (localStorage.getItem("count") !== "0") {
       return true;
     }
   });
@@ -33,17 +36,20 @@ function App() {
     <>
       <div className="container flex px-[16px] flex-col items-center gap-[50px] relative max-md:px-[0px] max-md:gap-0">
         <Bar
+          showOrange={showOrange}
           isShown={isShown}
           Count={state.quantity}
           TrashClick={() => {
             setIsShown(false);
+            localStorage.setItem("count", 0);
           }}
-          Count={state.quantity}
+          Count={count}
         />
         <Product
           Count={state.quantity}
           Click={() => {
-            localStorage.setItem("count", state.quantity);
+            const added = Number(localStorage.getItem("count")) || 0;
+            localStorage.setItem("count", added + state.quantity);
           }}
           Plus={() => {
             dispatch({ type: "increment" });
