@@ -4,8 +4,8 @@ import Cart from "../../../assets/Images/CartWhite.svg";
 function Button({ Count, Plus, Minus, Click }) {
   return (
     <>
-      <div className="flex gap-[16px]">
-        <div className="flex gap-[45px] py-[17px] px-[20px] rounded-[10px] bg-[#F6F8FD]">
+      <div className="flex gap-[16px] max-md:flex-col">
+        <div className="flex gap-[45px] py-[17px] px-[20px] rounded-[10px] bg-[#F6F8FD] max-md:justify-between">
           <h1
             onClick={Minus}
             className="text-[#FF7E1B] text-[40px] font-[700] cursor-pointer hover:opacity-50"
@@ -24,7 +24,7 @@ function Button({ Count, Plus, Minus, Click }) {
         </div>
         <button
           onClick={Click}
-          className="py-[22px] px-[77px] flex gap-[15px] text-white bg-[#FF7E1B] rounded-[10px] items-center cursor-pointer font-[700] text-[16px] hover:bg-[#FFAB6A]"
+          className="justify-center items-center py-[22px] px-[77px] flex gap-[15px] text-white bg-[#FF7E1B] rounded-[10px] items-center cursor-pointer font-[700] text-[16px] hover:bg-[#FFAB6A] whitespace-nowrap"
         >
           <img src={Cart} className="size-[17px]" />
           Add to cart

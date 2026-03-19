@@ -6,91 +6,65 @@ import ShoeTwo from "../../../assets/Images/Shoe/ShoeTwo.png";
 import ShoeThree from "../../../assets/Images/Shoe/ShoeThree.png";
 import ShoeFour from "../../../assets/Images/Shoe/ShoeFour.png";
 
-function Images({ One, Two, Three, Four }) {
+import Left from "../../../assets/Images/LeftArrow.svg";
+import Right from "../../../assets/Images/RightArrow.svg";
+
+const images = [ShoeOne, ShoeTwo, ShoeThree, ShoeFour];
+
+function Images() {
+  const [activeIndex, setActiveIndex] = useState(0);
   const [toggler, setToggler] = useState(false);
-  const [mainImg, setMainImg] = useState(ShoeOne);
-  const [isActiveOne, setIsActiveOne] = useState(true);
-  const [isActiveTwo, setIsActiveTwo] = useState(false);
-  const [isActiveThree, setIsActiveThre] = useState(false);
-  const [isActiveFour, setIsActiveFour] = useState(false);
+
+  const prev = () =>
+    setActiveIndex((i) => (i === 0 ? images.length - 1 : i - 1));
+  const next = () =>
+    setActiveIndex((i) => (i === images.length - 1 ? 0 : i + 1));
+
   return (
-    <>
-      <div className="flex flex-col gap-[32px]">
-        <button onClick={() => setToggler(!toggler)}>
-          <img src={mainImg} className="size-[445px]" />
+    <div className="flex flex-col gap-[32px] max-md:w-full">
+      <div className="relative">
+        <button onClick={() => setToggler(!toggler)} className="hidden md:flex">
+          <img
+            src={images[activeIndex]}
+            className="size-[445px] max-md:w-full"
+          />
         </button>
-        <div className="flex justify-between">
-          <img
-            src={ShoeOne}
-            className="size-[88px] rounded-[13px]"
-            style={{
-              border: isActiveOne ? "3px solid #FF7E1B" : "none",
-              opacity: isActiveOne ? 0.5 : 1,
-            }}
-            onClick={() => {
-              setIsActiveOne(true);
-              setIsActiveTwo(false);
-              setIsActiveThre(false);
-              setIsActiveFour(false);
-              setMainImg(ShoeOne);
-            }}
-          />
-          <img
-            src={ShoeTwo}
-            className="size-[88px] rounded-[13px]"
-            style={{
-              border: isActiveTwo ? "3px solid #FF7E1B" : "none",
-              opacity: isActiveTwo ? 0.5 : 1,
-            }}
-            onClick={() => {
-              setIsActiveOne(false);
-              setIsActiveTwo(true);
-              setIsActiveThre(false);
-              setIsActiveFour(false);
-              setMainImg(ShoeTwo);
-            }}
-          />
-          <img
-            src={ShoeThree}
-            className="size-[88px] rounded-[13px]"
-            style={{
-              border: isActiveThree ? "3px solid #FF7E1B" : "none",
-              opacity: isActiveThree ? 0.5 : 1,
-            }}
-            onClick={() => {
-              setIsActiveOne(false);
-              setIsActiveTwo(false);
-              setIsActiveThre(true);
-              setIsActiveFour(false);
-              setMainImg(ShoeThree);
-            }}
-          />
-          <img
-            src={ShoeFour}
-            className="size-[88px] rounded-[13px]"
-            style={{
-              border: isActiveFour ? "3px solid #FF7E1B" : "none",
-              opacity: isActiveFour ? 0.5 : 1,
-            }}
-            onClick={() => {
-              setIsActiveOne(false);
-              setIsActiveTwo(false);
-              setIsActiveThre(false);
-              setIsActiveFour(true);
-              setMainImg(ShoeFour);
-            }}
-          />
-        </div>
+        <img
+          src={images[activeIndex]}
+          className="size-[445px] md:hidden max-md:w-full"
+        />
+
+        <button
+          onClick={prev}
+          className="size-[56px] absolute left-2 top-50 items-center justify-center bg-white rounded-full p-2 shadow hidden max-md:flex"
+        >
+          <img src={Left} alt="" />
+        </button>
+        <button
+          onClick={next}
+          className="size-[56px] absolute right-2 top-50 items-center justify-center bg-white rounded-full p-2 shadow hidden max-md:flex"
+        >
+          <img src={Right} alt="" />
+        </button>
       </div>
-      <FsLightbox
-        toggler={toggler}
-        sources={[
-          "https://i.imgur.com/fsyrScY.jpg",
-          "https://www.youtube.com/watch?v=3nQNiWdeH2Q",
-          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-        ]}
-      />
-    </>
+
+      <div className="flex justify-between max-md:hidden">
+        {images.map((img, i) => (
+          <img
+            key={i}
+            src={img}
+            className="size-[88px] rounded-[13px] cursor-pointer max-md:rounded"
+            style={{
+              border: activeIndex === i ? "3px solid #FF7E1B" : "none",
+              opacity: activeIndex === i ? 0.5 : 1,
+            }}
+            onClick={() => setActiveIndex(i)}
+          />
+        ))}
+      </div>
+
+      <FsLightbox toggler={toggler} sources={images} />
+    </div>
   );
 }
 

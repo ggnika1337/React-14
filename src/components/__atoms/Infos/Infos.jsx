@@ -8,7 +8,9 @@ function Infos({ Company, Name, Description, Price, Discount, OldPrice }) {
           <span className="text-[#FF7E1B] text-[15px] font-[700]">
             {Company}
           </span>
-          <h1 className="text-[#1D2026] text-[40px] font-[700]">{Name}</h1>
+          <h1 className="text-[#1D2026] text-[40px] font-[700] max-md:text-[20px]">
+            {Name}
+          </h1>
           <span className="text-[#69707D] text-[16px] font-[400]">
             {Description}
           </span>

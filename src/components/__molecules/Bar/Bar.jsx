@@ -6,17 +6,8 @@ import Burger from "../Burger/Burger";
 import Trash from "../../../assets/Images/Trash.svg";
 import Img from "../../../assets/Images/Shoe/ShoeOne.png";
 
-function Bar() {
+function Bar({ Count, isShown, TrashClick }) {
   const [showCart, setShowCart] = useState(false);
-  const [isShown, setIsShown] = useState(() => {
-    if (localStorage.getItem("count") === "0") {
-      return false;
-    } else {
-      return true;
-    }
-  });
-  console.log(isShown);
-  console.log(localStorage.getItem("count"));
   const [door, setDoor] = useState(false);
 
   const boxEl = useRef(null);
@@ -40,7 +31,7 @@ function Bar() {
           setBarOpacity(0);
         }}
       />
-      <div className="border-b border-[#E4E9F2] w-full max-w-[1110px] h-[112px] flex justify-between items-center">
+      <div className="border-b border-[#E4E9F2] w-full max-w-[1110px] h-[112px] flex justify-between items-center max-md:px-[24px]">
         <div className="flex gap-[56px] h-full items-center flex-row">
           <div className="flex gap-[16px]">
             <div
@@ -76,7 +67,7 @@ function Bar() {
             </div>
             <img src={Sneakers} className="w-[137px] h-[20px]" />
           </div>
-          <div className="text-[15px] font-[400] text-[#69707D] h-full items-center flex gap-[30px] max-md:hidden">
+          <div className="text-[15px] font-[400] text-[#69707D] h-full items-center flex gap-[30px] max-md:hidden z-2">
             <div className="hover:text-black border-[#FF7E1B] hover:border-b-[4px] h-full pt-[45px] cursor-pointer transition-none">
               <h1>Collections</h1>
             </div>
@@ -97,9 +88,7 @@ function Bar() {
         <div className="flex gap-[40px]">
           <div className="flex items-center relative">
             <div className="absolute right-[-7px] top-[10px] w-[19px] h-[13px] bg-[#FF7E1B] rounded-[7px] flex items-center justify-center z-10">
-              <h1 className="text-white text-[10px]">
-                {localStorage.getItem("count")}
-              </h1>
+              <h1 className="text-white text-[10px]">{Count}</h1>
             </div>
             <img
               onClick={() => {
@@ -121,7 +110,7 @@ function Bar() {
 
       <div
         style={{ display: showCart ? "flex" : "none" }}
-        className="absolute top-[95px] right-[90px] w-[360px] h-[256px] flex flex-col gap-[25px] bg-white px-[24px] py-[28px] shadow-[0px_20px_50px_-20px_#1D202680] rounded-[10px]"
+        className="absolute top-[95px] right-[90px] w-[360px] h-[256px] flex flex-col gap-[25px] bg-white px-[24px] py-[28px] shadow-[0px_20px_50px_-20px_#1D202680] rounded-[10px] z-20 max-md:w-[95%] max-md:right-[7px] max-md:ml-[14px]"
       >
         <h1 className="font-[700] text-[16px] text-[#1D2026]">Cart</h1>
         <div className="w-full h-[1px] bg-[#E4E9F2]"></div>
@@ -141,15 +130,14 @@ function Bar() {
               Fall Limited Edition Sneakers
             </span>
             <div className="flex gap-[5px]">
-              <span>$125.00 x {localStorage.getItem("count")}</span>
-              <span>{"$" + 125 * localStorage.getItem("count") + ".00"}</span>
+              <span>$125.00 x {Count}</span>
+              <span className="font-[700]">
+                {"$" + 125 * localStorage.getItem("count") + ".00"}
+              </span>
             </div>
           </div>
           <img
-            onClick={() => {
-              setIsShown(false);
-              localStorage.setItem("count", 0);
-            }}
+            onClick={TrashClick}
             src={Trash}
             className="size-[16px] cursor-pointer"
           />
