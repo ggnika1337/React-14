@@ -19,13 +19,11 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [added, setAdded] = useState();
   const [state, dispatch] = useReducer(reducer, { quantity: 0 });
-  const [count, setCount] = useState(() => {
-    return Number(localStorage.getItem("count")) || 0;
-  });
-  const [isShown, setIsShown] = useState(true);
-  const [showOrange, setShowOrange] = useState(() => {
+  const [count, setCount] = useState(
+    () => Number(localStorage.getItem("count")) || 0,
+  );
+  const [isShown, setIsShown] = useState(() => {
     if (localStorage.getItem("count") === "0") {
       return false;
     } else if (localStorage.getItem("count") !== "0") {
@@ -36,27 +34,23 @@ function App() {
     <>
       <div className="container flex px-[16px] flex-col items-center gap-[50px] relative max-md:px-[0px] max-md:gap-0">
         <Bar
-          showOrange={showOrange}
+          showOrange={isShown}
           isShown={isShown}
-          Count={state.quantity}
+          Count={count}
           TrashClick={() => {
-            setIsShown(false);
+            setCount(0);
             localStorage.setItem("count", 0);
           }}
-          Count={count}
         />
         <Product
           Count={state.quantity}
           Click={() => {
-            const added = Number(localStorage.getItem("count")) || 0;
-            localStorage.setItem("count", added + state.quantity);
+            const newCount = count + state.quantity;
+            setCount(newCount);
+            localStorage.setItem("count", newCount);
           }}
-          Plus={() => {
-            dispatch({ type: "increment" });
-          }}
-          Minus={() => {
-            dispatch({ type: "decrement" });
-          }}
+          Plus={() => dispatch({ type: "increment" })}
+          Minus={() => dispatch({ type: "decrement" })}
         />
       </div>
     </>
